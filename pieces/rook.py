@@ -4,7 +4,7 @@ from pieces.piece import Piece
 class Rook(Piece):
 
     def __init__(self, color, position_x, position_y):
-        Piece.__init__(self, 'rook', color, position_x, position_y)
+        Piece.__init__(self, color, position_x, position_y)
 
     def __repr__(self):
         return '{}R{}{}'.format(self.color, self.position_x, self.position_y)
