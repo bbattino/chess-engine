@@ -37,7 +37,7 @@ class Board:
             for y in range(8):
                 piece = self.board[x][y]
                 if piece and piece.color == color:
-                    moves = piece.possible_moves()
+                    moves = piece.possible_moves(self.board)
                     if moves:
                         for move_x, move_y in moves:
                             if move_x != x or move_y != y:
