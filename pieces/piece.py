@@ -15,6 +15,18 @@ class Piece:
     def possible_moves(self, board):
         return []
 
+    def is_piece(self, x, y, board):
+        return board[x][y] is not None
+
+    def is_oponent(self, x, y, board):
+        return board[x][y] and board[x][y].color != self.color
+
+    def is_partner(self, x, y, board):
+        return board[x][y] and board[x][y].color == self.color
+
+    def is_legal_move(self, x, y):
+        return 0 <= x < 8 and 0 <= y <8
+
 
     def copy(self):
         return Piece(self.color, self.position_x, self.position_y)
