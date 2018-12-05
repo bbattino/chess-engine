@@ -46,3 +46,10 @@ class Board:
                                 boards.append(board_copy)
         return boards
 
+    def value(self):
+        value = 0
+        for x in range(8):
+            for y in range(8):
+                if self.board[x][y]:
+                    value += self.board[x][y].value
+        return value

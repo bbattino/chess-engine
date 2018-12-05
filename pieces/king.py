@@ -5,6 +5,8 @@ class King(Piece):
 
     def __init__(self, color, position_x, position_y):
         Piece.__init__(self, color, position_x, position_y)
+        self.value = 1000 * (2 * (color == 'w') - 1)
+
 
     def __repr__(self):
         return '{}+{}{}'.format(self.color, self.position_x, self.position_y)
