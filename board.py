@@ -71,25 +71,25 @@ class Board:
 
     def legal_init_board(self):
         for x in range(8):
-            self.add_piece(Pawn, 'w', x, 1)
-            self.add_piece(Pawn, 'b', x, 6)
+            self.add_piece(Pawn, True, x, 1)
+            self.add_piece(Pawn, False, x, 6)
 
-        self.add_piece(Rook, 'w', 0, 0)
-        self.add_piece(Rook, 'w', 7, 0)
-        self.add_piece(Rook, 'b', 0, 7)
-        self.add_piece(Rook, 'b', 7, 7)
+        self.add_piece(Rook, True, 0, 0)
+        self.add_piece(Rook, True, 7, 0)
+        self.add_piece(Rook, False, 0, 7)
+        self.add_piece(Rook, False, 7, 7)
 
-        self.add_piece(Knight, 'w', 1, 0)
-        self.add_piece(Knight, 'w', 6, 0)
-        self.add_piece(Knight, 'b', 1, 7)
-        self.add_piece(Knight, 'b', 6, 7)
+        self.add_piece(Knight, True, 1, 0)
+        self.add_piece(Knight, True, 6, 0)
+        self.add_piece(Knight, False, 1, 7)
+        self.add_piece(Knight, False, 6, 7)
 
-        self.add_piece(Bishop, 'w', 2, 0)
-        self.add_piece(Bishop, 'w', 5, 0)
-        self.add_piece(Bishop, 'b', 2, 7)
-        self.add_piece(Bishop, 'b', 5, 7)
+        self.add_piece(Bishop, True, 2, 0)
+        self.add_piece(Bishop, True, 5, 0)
+        self.add_piece(Bishop, False, 2, 7)
+        self.add_piece(Bishop, False, 5, 7)
 
-        self.add_piece(Queen, 'w', 3, 0)
-        self.add_piece(Queen, 'b', 3, 7)
-        self.add_piece(King, 'w', 4, 0)
-        self.add_piece(King, 'b', 4, 7)
+        self.add_piece(Queen, True, 3, 0)
+        self.add_piece(Queen, False, 3, 7)
+        self.add_piece(King, True, 4, 0)
+        self.add_piece(King, False, 4, 7)

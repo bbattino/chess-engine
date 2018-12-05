@@ -5,11 +5,11 @@ class Rook(Piece):
 
     def __init__(self, color, position_x, position_y):
         Piece.__init__(self, color, position_x, position_y)
-        self.value = 5 * (2 * (color == 'w') - 1)
+        self.value = 5 * (2 * color - 1)
 
 
     def __repr__(self):
-        return '\u265c' if self.color == 'w' else '\u2656'
+        return '\u265c' if self.color else '\u2656'
 
     def possible_moves(self, board):
         # TODO : To optimise by looping on delta_position
