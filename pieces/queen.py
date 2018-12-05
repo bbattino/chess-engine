@@ -10,7 +10,8 @@ class Queen(Piece):
 
 
     def __repr__(self):
-        return '\u265b' if self.color else '\u2655'
+        # return '\u265b' if self.color else '\u2655'
+        return '&#9813;' if self.color else '&#9819;'
 
     def possible_moves(self, board):
         return list(set(Rook(
