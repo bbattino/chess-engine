@@ -8,7 +8,7 @@ class Bishop(Piece):
         self.value = 3 * (2 * (color == 'w') - 1)
 
     def __repr__(self):
-        return '{}b{}{}'.format(self.color, self.position_x, self.position_y)
+        return '\u265d' if self.color == 'w' else '\u2657'
 
     def possible_moves(self, board):
         deltas = [(1, 1), (1, -1), (-1, 1), (-1, -1)]

@@ -8,7 +8,7 @@ class Knight(Piece):
         self.value = 3 * (2 * (color == 'w') - 1)
 
     def __repr__(self):
-        return '{}k{}{}'.format(self.color, self.position_x, self.position_y)
+        return '\u265e' if self.color == 'w' else '\u2658'
 
     def possible_moves(self, board):
         # TODO : To optimise by looping on delta_position

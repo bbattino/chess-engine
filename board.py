@@ -1,3 +1,5 @@
+from pieces import Pawn, Queen
+
 class Board:
     def __init__(self):
         self.board = [[None for _ in range(8)] for _ in range(8)]
@@ -7,7 +9,7 @@ class Board:
             [
                 ' '.join(
                     [
-                        self.board[x][y].__repr__() if self.board[x][y] else '....'
+                        self.board[x][y].__repr__() if self.board[x][y] else '.'
                         for x in range(8)
                     ]
                 )
@@ -26,10 +28,21 @@ class Board:
         self.board[x][y] = piece_class(color, x, y)
 
     def move_piece(self, x1, y1, x2, y2):
+        if self.is_promotion(x1, y1, x2, y2):
+            return
         piece = self.board[x1][y1]
         piece.set_position(x2, y2)
         self.board[x2][y2] = piece
         self.board[x1][y1] = None
+
+    def is_promotion(self, x1, y1, x2, y2):
+        piece = self.board[x1][y1]
+        if isinstance(piece, Pawn) and y2 in [0, 7]:
+            self.board[x2][y2] = Queen(piece.color, x2, y2)
+            self.board[x1][y1] = None
+            return True
+        return False
+
 
     def possible_move(self, color):
         boards = []
