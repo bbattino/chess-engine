@@ -1,38 +1,16 @@
 from pieces import Rook, Pawn, Bishop, Knight, King, Queen
 from board import Board
 
+import curses
 import random
+import time
 
 
 board = Board()
 
-for x in range(8):
-    board.add_piece(Pawn, 'w', x, 1)
-    board.add_piece(Pawn, 'b', x, 6)
-
-board.add_piece(Rook, 'w', 0, 0)
-board.add_piece(Rook, 'w', 7, 0)
-board.add_piece(Rook, 'b', 0, 7)
-board.add_piece(Rook, 'b', 7, 7)
-
-board.add_piece(Knight, 'w', 1, 0)
-board.add_piece(Knight, 'w', 6, 0)
-board.add_piece(Knight, 'b', 1, 7)
-board.add_piece(Knight, 'b', 6, 7)
-
-board.add_piece(Bishop, 'w', 2, 0)
-board.add_piece(Bishop, 'w', 5, 0)
-board.add_piece(Bishop, 'b', 2, 7)
-board.add_piece(Bishop, 'b', 5, 7)
-
-board.add_piece(Queen, 'w', 3, 0)
-board.add_piece(Queen, 'b', 3, 7)
-board.add_piece(King, 'w', 4, 0)
-board.add_piece(King, 'b', 4, 7)
-
 is_playing = 'b'
 boards = [board]
-for _ in range(10):
+for _ in range(30):
     is_playing = 'w' if is_playing == 'b' else 'b'
     boards.append(
         random.choice(
@@ -40,11 +18,17 @@ for _ in range(10):
         )
     )
 
-print(
-    '\n\n'.join(
-        [
-            'move {} : value {}\n{}'.format(index, b.value(), repr(b))
-            for index, b in enumerate(boards)
-        ]
-    )
-)
+def print_board(board, index):
+    """progress: 0-10"""
+    time.sleep(1.5)
+    stdscr.addstr(0, 0, 'move {} : value {}'.format(index, board.value()))
+    for i, line in enumerate(repr(board).split('\n')):
+        stdscr.addstr(i + 1, 0, line)
+    stdscr.refresh()
+
+stdscr = curses.initscr()
+curses.noecho()
+curses.cbreak()
+
+for index, b in enumerate(boards):
+    print_board(b, index)

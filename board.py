@@ -1,8 +1,10 @@
-from pieces import Pawn, Queen
+from pieces import Bishop, King, Knight, Pawn, Queen, Rook
 
 class Board:
-    def __init__(self):
+    def __init__(self, method='legal'):
         self.board = [[None for _ in range(8)] for _ in range(8)]
+        if method == 'legal':
+            self.legal_init_board()
 
     def __repr__(self):
         return '\n'.join(
@@ -66,3 +68,28 @@ class Board:
                 if self.board[x][y]:
                     value += self.board[x][y].value
         return value
+
+    def legal_init_board(self):
+        for x in range(8):
+            self.add_piece(Pawn, 'w', x, 1)
+            self.add_piece(Pawn, 'b', x, 6)
+
+        self.add_piece(Rook, 'w', 0, 0)
+        self.add_piece(Rook, 'w', 7, 0)
+        self.add_piece(Rook, 'b', 0, 7)
+        self.add_piece(Rook, 'b', 7, 7)
+
+        self.add_piece(Knight, 'w', 1, 0)
+        self.add_piece(Knight, 'w', 6, 0)
+        self.add_piece(Knight, 'b', 1, 7)
+        self.add_piece(Knight, 'b', 6, 7)
+
+        self.add_piece(Bishop, 'w', 2, 0)
+        self.add_piece(Bishop, 'w', 5, 0)
+        self.add_piece(Bishop, 'b', 2, 7)
+        self.add_piece(Bishop, 'b', 5, 7)
+
+        self.add_piece(Queen, 'w', 3, 0)
+        self.add_piece(Queen, 'b', 3, 7)
+        self.add_piece(King, 'w', 4, 0)
+        self.add_piece(King, 'b', 4, 7)
