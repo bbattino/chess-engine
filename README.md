@@ -1,3 +1,4 @@
 ### Chess engine
 
-Work in progress
+To run a random game :
+`python engine.py`
