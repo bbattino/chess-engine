@@ -9,17 +9,17 @@ class Pawn(Piece):
 
 
     def __repr__(self):
-        return '{}P{}{}'.format(self.color, self.position_x, self.position_y)
+        return '\u265f' if self.color == 'w' else '\u2659'
 
     def possible_moves(self, board):
         # TODO add en passant capture
         # TODO handle promotion
         possible_moves = []
         y = self.position_y - 1 + 2 * (self.color == 'w')
-        if not board[self.position_x][y]:
+        if not self.is_piece(self.position_x, y, board):
             possible_moves.append((self.position_x, y))
         for x in [self.position_x - 1, self.position_x + 1]:
-            if self.is_legal_move(x, y) and not self.is_partner(x, y, board):
+            if self.is_legal_move(x, y) and self.is_oponent(x, y, board):
                 possible_moves.append((x, y))
         return possible_moves
 
