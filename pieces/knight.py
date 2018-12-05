@@ -20,7 +20,7 @@ class Knight(Piece):
         return [
             (move_x, move_y)
             for move_x, move_y in moves
-            if 0 <= move_x < 8 and 0 <= move_y < 8 and (not board[move_x][move_y] or board[move_x][move_y].color != self.color)
+            if self.is_legal_move(move_x, move_y) and not self.is_partner(move_x, move_y, board)
         ]
 
     def copy(self):

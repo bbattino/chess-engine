@@ -1,4 +1,4 @@
-from pieces import Rook, Pawn, Bishop, Knight, King
+from pieces import Rook, Pawn, Bishop, Knight, King, Queen
 from board import Board
 
 
@@ -23,9 +23,11 @@ board.add_piece(Bishop, 'w', 5, 0)
 board.add_piece(Bishop, 'b', 2, 7)
 board.add_piece(Bishop, 'b', 5, 7)
 
+board.add_piece(Queen, 'w', 3, 0)
+board.add_piece(Queen, 'b', 3, 7)
 board.add_piece(King, 'w', 4, 0)
 board.add_piece(King, 'b', 4, 7)
 
 
 for index, possible_board in enumerate(board.possible_move('w')):
-    print('board {}:\n{}'.format(index, possible_board))
+    print('board {}:\n{}\n'.format(index, possible_board))
