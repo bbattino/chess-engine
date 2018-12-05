@@ -28,7 +28,7 @@ class Bishop(Piece):
         return Bishop(self.color, self.position_x, self.position_y)
 
     def _is_valid_move(self, x, y, board):
-        return 0 <= x <8 and 0 <= y < 8 and not board[x][y]
+        return self.is_legal_move(x, y) and not self.is_piece(x, y, board)
 
     def _is_capture(self, x, y, board):
         return board[x][y] and board[x][y].color != self.color

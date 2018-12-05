@@ -21,4 +21,3 @@ class Pawn(Piece):
                 possible_moves.append((x, y))
 
         return possible_moves
-
