@@ -5,6 +5,8 @@ class Pawn(Piece):
 
     def __init__(self, color, position_x, position_y):
         Piece.__init__(self, color, position_x, position_y)
+        self.value = 2 * (color == 'w') - 1
+
 
     def __repr__(self):
         return '{}P{}{}'.format(self.color, self.position_x, self.position_y)
@@ -17,7 +19,9 @@ class Pawn(Piece):
         if not board[self.position_x][y]:
             possible_moves.append((self.position_x, y))
         for x in [self.position_x - 1, self.position_x + 1]:
-            if 0 <= x < 8 and board[x][y] and board[x][y].color != self.color:
+            if self.is_legal_move(x, y) and not self.is_partner(x, y, board):
                 possible_moves.append((x, y))
-
         return possible_moves
+
+    def copy(self):
+        return Pawn(self.color, self.position_x, self.position_y)

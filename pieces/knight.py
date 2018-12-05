@@ -5,6 +5,7 @@ class Knight(Piece):
 
     def __init__(self, color, position_x, position_y):
         Piece.__init__(self, color, position_x, position_y)
+        self.value = 3 * (2 * (color == 'w') - 1)
 
     def __repr__(self):
         return '{}k{}{}'.format(self.color, self.position_x, self.position_y)
