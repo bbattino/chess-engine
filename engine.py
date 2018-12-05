@@ -1,6 +1,8 @@
 from pieces import Rook, Pawn, Bishop, Knight, King, Queen
 from board import Board
 
+import random
+
 
 board = Board()
 
@@ -28,6 +30,21 @@ board.add_piece(Queen, 'b', 3, 7)
 board.add_piece(King, 'w', 4, 0)
 board.add_piece(King, 'b', 4, 7)
 
+is_playing = 'b'
+boards = [board]
+for _ in range(10):
+    is_playing = 'w' if is_playing == 'b' else 'b'
+    boards.append(
+        random.choice(
+            boards[-1].possible_move(is_playing)
+        )
+    )
 
-for index, possible_board in enumerate(board.possible_move('w')):
-    print('board {}:\n{}\n'.format(index, possible_board))
+print(
+    '\n\n'.join(
+        [
+            'move {} : value {}\n{}'.format(index, b.value(), repr(b))
+            for index, b in enumerate(boards)
+        ]
+    )
+)
