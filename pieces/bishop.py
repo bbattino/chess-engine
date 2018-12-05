@@ -5,10 +5,10 @@ class Bishop(Piece):
 
     def __init__(self, color, position_x, position_y):
         Piece.__init__(self, color, position_x, position_y)
-        self.value = 3 * (2 * (color == 'w') - 1)
+        self.value = 3 * (2 * color - 1)
 
     def __repr__(self):
-        return '\u265d' if self.color == 'w' else '\u2657'
+        return '\u265d' if self.color else '\u2657'
 
     def possible_moves(self, board):
         deltas = [(1, 1), (1, -1), (-1, 1), (-1, -1)]

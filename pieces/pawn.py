@@ -5,17 +5,17 @@ class Pawn(Piece):
 
     def __init__(self, color, position_x, position_y):
         Piece.__init__(self, color, position_x, position_y)
-        self.value = 2 * (color == 'w') - 1
+        self.value = 2 * color - 1
 
 
     def __repr__(self):
-        return '\u265f' if self.color == 'w' else '\u2659'
+        return '\u265f' if self.color else '\u2659'
 
     def possible_moves(self, board):
         # TODO add en passant capture
         # TODO handle promotion
         possible_moves = []
-        y = self.position_y - 1 + 2 * (self.color == 'w')
+        y = self.position_y - 1 + 2 * (self.color)
         if not self.is_piece(self.position_x, y, board):
             possible_moves.append((self.position_x, y))
         for x in [self.position_x - 1, self.position_x + 1]:
