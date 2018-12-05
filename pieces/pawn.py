@@ -9,7 +9,8 @@ class Pawn(Piece):
 
 
     def __repr__(self):
-        return '\u265f' if self.color else '\u2659'
+        # return '\u265f' if self.color else '\u2659'
+        return '&#9817;' if self.color else '&#9823;'
 
     def possible_moves(self, board):
         # TODO add en passant capture

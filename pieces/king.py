@@ -9,7 +9,8 @@ class King(Piece):
 
 
     def __repr__(self):
-        return '\u265a' if self.color else '\u2654'
+        return '&#9812;' if self.color else '&#9818;'
+        # return '\u265a' if self.color else '\u2654'
 
     def possible_moves(self, board):
         deltas = list(set([

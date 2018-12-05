@@ -19,6 +19,9 @@ class Board:
             ]
         )
 
+    def __getitem__(self, x):
+        return self.board[x]
+
     def __copy__(self):
         copy = Board()
         for x in range(8):
