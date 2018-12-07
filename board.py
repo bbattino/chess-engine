@@ -1,5 +1,7 @@
 from pieces import Bishop, King, Knight, Pawn, Queen, Rook
 
+import numpy as np
+
 class Board:
     def __init__(self, method='legal'):
         self.board = [[None for _ in range(8)] for _ in range(8)]
@@ -51,26 +53,39 @@ class Board:
 
     def possible_move(self, color):
         boards = []
-        for x in range(8):
-            for y in range(8):
-                piece = self.board[x][y]
-                if piece and piece.color == color:
-                    moves = piece.possible_moves(self.board)
-                    if moves:
-                        for move_x, move_y in moves:
-                            if move_x != x or move_y != y:
-                                board_copy = self.__copy__()
-                                board_copy.move_piece(x, y, move_x, move_y)
-                                boards.append(board_copy)
+        for x, y in np.ndindex((8, 8)):
+            piece = self.board[x][y]
+            if piece and piece.color == color:
+                moves = piece.possible_moves(self.board)
+                if moves:
+                    for move_x, move_y in moves:
+                        if move_x != x or move_y != y:
+                            board_copy = self.__copy__()
+                            board_copy.move_piece(x, y, move_x, move_y)
+                            boards.append(board_copy)
         return boards
 
     def value(self):
         value = 0
-        for x in range(8):
-            for y in range(8):
-                if self.board[x][y]:
-                    value += self.board[x][y].value
+        for x, y in np.ndindex((8, 8)):
+            piece = self.board[x][y]
+            if piece:
+                value += piece.value
         return value
+
+    def evaluate(self, depth, is_white_playing):
+        if depth == 0:
+            return self.value()
+        all_evaluations = [
+            board.evaluate(depth-1, not is_white_playing)
+            for board in self.possible_move(is_white_playing)
+        ]
+        if len(all_evaluations) == 0:
+            return self.value()
+        if is_white_playing:
+            return max(all_evaluations)
+        return min(all_evaluations)
+
 
     def legal_init_board(self):
         for x in range(8):
