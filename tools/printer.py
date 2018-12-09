@@ -4,10 +4,10 @@ import numpy as np
 
 class Printer:
 
-    def print_html(self, board):
+    def print_html(self, board, file='template/index.html'):
         self.board = board
         self._build_html()
-        self._update_html()
+        self._update_html(file)
 
     def _build_html(self):
         self.html = HTML.format(
@@ -22,7 +22,7 @@ class Printer:
             )
         )
 
-    def _update_html(self, file='template/index.html'):
+    def _update_html(self, file):
         with open(file, 'w') as f:
             f.write(self.html)
 

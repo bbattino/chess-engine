@@ -2,11 +2,15 @@ from pieces import Bishop, King, Knight, Pawn, Queen, Rook
 
 import numpy as np
 
+
 class Board:
     def __init__(self, method='legal'):
         self.board = [[None for _ in range(8)] for _ in range(8)]
+        self.possible_moves = {}
         if method == 'legal':
             self.legal_init_board()
+        if method == 'exercice':
+            self.exercice()
 
     def __repr__(self):
         return '\n'.join(
@@ -50,9 +54,14 @@ class Board:
             return True
         return False
 
-
     def possible_move(self, color):
-        boards = []
+        if color in self.possible_moves:
+            return self.possible_moves[color]
+        self.compute_possible_move(color)
+        return self.possible_moves[color]
+
+    def compute_possible_move(self, color):
+        self.possible_moves[color] = []
         for x, y in np.ndindex((8, 8)):
             piece = self.board[x][y]
             if piece and piece.color == color:
@@ -62,8 +71,7 @@ class Board:
                         if move_x != x or move_y != y:
                             board_copy = self.__copy__()
                             board_copy.move_piece(x, y, move_x, move_y)
-                            boards.append(board_copy)
-        return boards
+                            self.possible_moves[color].append(board_copy)
 
     def value(self):
         value = 0
@@ -73,19 +81,13 @@ class Board:
                 value += piece.value
         return value
 
-    def evaluate(self, depth, is_white_playing):
-        if depth == 0:
-            return self.value()
-        all_evaluations = [
-            board.evaluate(depth-1, not is_white_playing)
-            for board in self.possible_move(is_white_playing)
-        ]
-        if len(all_evaluations) == 0:
-            return self.value()
-        if is_white_playing:
-            return max(all_evaluations)
-        return min(all_evaluations)
+    def exercice(self):
+        for x in range(3):
+            self.add_piece(Pawn, True, x, 4)
+            self.add_piece(Pawn, False, x, 6)
 
+        # self.add_piece(King, True, 7, 0)
+        self.add_piece(King, False, 7, 0)
 
     def legal_init_board(self):
         for x in range(8):

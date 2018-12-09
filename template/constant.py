@@ -2,7 +2,7 @@ HTML = '''
     <html>
         <head>
             <meta charset="UTF-8">
-            <META HTTP-EQUIV="Refresh" CONTENT="1s" URL="#">
+            <meta http-equiv="refresh" content="0.5">
             <link rel="stylesheet" type="text/css" href="style.css">
         </head>
         <body>
