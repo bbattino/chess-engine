@@ -6,12 +6,14 @@ class Queen(Piece):
 
     def __init__(self, color, position_x, position_y):
         Piece.__init__(self, color, position_x, position_y)
-        self.value = 8 * (2 * color - 1)
-
 
     def __repr__(self):
         # return '\u265b' if self.color else '\u2655'
         return '&#9813;' if self.color else '&#9819;'
+
+    @property
+    def value(self):
+        return 8 * self.color
 
     def possible_moves(self, board):
         return list(set(Rook(

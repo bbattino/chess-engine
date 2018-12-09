@@ -2,6 +2,9 @@ from pieces import Bishop, King, Knight, Pawn, Queen, Rook
 
 import numpy as np
 
+WHITE = 1
+BLACK = -1
+
 
 class Board:
     def __init__(self, method='legal'):
@@ -83,33 +86,33 @@ class Board:
 
     def exercice(self):
         for x in range(3):
-            self.add_piece(Pawn, True, x, 4)
-            self.add_piece(Pawn, False, x, 6)
+            self.add_piece(Pawn, WHITE, x, 4)
+            self.add_piece(Pawn, BLACK, x, 6)
 
-        # self.add_piece(King, True, 7, 0)
-        self.add_piece(King, False, 7, 0)
+        # self.add_piece(King, WHITE, 7, 0)
+        self.add_piece(King, BLACK, 7, 0)
 
     def legal_init_board(self):
         for x in range(8):
-            self.add_piece(Pawn, True, x, 1)
-            self.add_piece(Pawn, False, x, 6)
+            self.add_piece(Pawn, WHITE, x, 1)
+            self.add_piece(Pawn, BLACK, x, 6)
 
-        self.add_piece(Rook, True, 0, 0)
-        self.add_piece(Rook, True, 7, 0)
-        self.add_piece(Rook, False, 0, 7)
-        self.add_piece(Rook, False, 7, 7)
+        self.add_piece(Rook, WHITE, 0, 0)
+        self.add_piece(Rook, WHITE, 7, 0)
+        self.add_piece(Rook, BLACK, 0, 7)
+        self.add_piece(Rook, BLACK, 7, 7)
 
-        self.add_piece(Knight, True, 1, 0)
-        self.add_piece(Knight, True, 6, 0)
-        self.add_piece(Knight, False, 1, 7)
-        self.add_piece(Knight, False, 6, 7)
+        self.add_piece(Knight, WHITE, 1, 0)
+        self.add_piece(Knight, WHITE, 6, 0)
+        self.add_piece(Knight, BLACK, 1, 7)
+        self.add_piece(Knight, BLACK, 6, 7)
 
-        self.add_piece(Bishop, True, 2, 0)
-        self.add_piece(Bishop, True, 5, 0)
-        self.add_piece(Bishop, False, 2, 7)
-        self.add_piece(Bishop, False, 5, 7)
+        self.add_piece(Bishop, WHITE, 2, 0)
+        self.add_piece(Bishop, WHITE, 5, 0)
+        self.add_piece(Bishop, BLACK, 2, 7)
+        self.add_piece(Bishop, BLACK, 5, 7)
 
-        self.add_piece(Queen, True, 3, 0)
-        self.add_piece(Queen, False, 3, 7)
-        self.add_piece(King, True, 4, 0)
-        self.add_piece(King, False, 4, 7)
+        self.add_piece(Queen, WHITE, 3, 0)
+        self.add_piece(Queen, BLACK, 3, 7)
+        self.add_piece(King, WHITE, 4, 0)
+        self.add_piece(King, BLACK, 4, 7)

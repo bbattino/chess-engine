@@ -20,7 +20,8 @@ print(len(all_moves))
 engine = Engine()
 engine.print_board()
 
-for i in range(30):
+for i in range(300):
+    time.sleep(2)
     d = max(3, 9-i)
     t = time.time()
     engine.play(deapth=d)
