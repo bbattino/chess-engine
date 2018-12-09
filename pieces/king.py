@@ -5,12 +5,14 @@ class King(Piece):
 
     def __init__(self, color, position_x, position_y):
         Piece.__init__(self, color, position_x, position_y)
-        self.value = 1000 * (2 * color - 1)
-
 
     def __repr__(self):
-        return '&#9812;' if self.color else '&#9818;'
+        return '&#9812;' if self.color == 1 else '&#9818;'
         # return '\u265a' if self.color else '\u2654'
+
+    @property
+    def value(self):
+        return 1000 * self.color
 
     def possible_moves(self, board):
         deltas = list(set([
