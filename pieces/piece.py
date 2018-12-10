@@ -12,6 +12,10 @@ class Piece:
         self.position_x = x
         self.position_y = y
 
+    @property
+    def value(self):
+        return self.value
+
     def possible_moves(self, board):
         return []
 

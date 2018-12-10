@@ -5,11 +5,14 @@ class Knight(Piece):
 
     def __init__(self, color, position_x, position_y):
         Piece.__init__(self, color, position_x, position_y)
-        self.value = 3 * (2 * color - 1)
 
     def __repr__(self):
         # return '\u265e' if self.color else '\u2658'
-        return '&#9816;' if self.color else '&#9822;'
+        return '&#9816;' if self.color == 1 else '&#9822;'
+
+    @property
+    def value(self):
+        return 3 * self.color
 
     def possible_moves(self, board):
         # TODO : To optimise by looping on delta_position

@@ -2,11 +2,18 @@ from pieces import Bishop, King, Knight, Pawn, Queen, Rook
 
 import numpy as np
 
+WHITE = 1
+BLACK = -1
+
+
 class Board:
     def __init__(self, method='legal'):
         self.board = [[None for _ in range(8)] for _ in range(8)]
+        self.possible_moves = {}
         if method == 'legal':
             self.legal_init_board()
+        if method == 'exercice':
+            self.exercice()
 
     def __repr__(self):
         return '\n'.join(
@@ -50,9 +57,14 @@ class Board:
             return True
         return False
 
-
     def possible_move(self, color):
-        boards = []
+        if color in self.possible_moves:
+            return self.possible_moves[color]
+        self.compute_possible_move(color)
+        return self.possible_moves[color]
+
+    def compute_possible_move(self, color):
+        self.possible_moves[color] = []
         for x, y in np.ndindex((8, 8)):
             piece = self.board[x][y]
             if piece and piece.color == color:
@@ -62,8 +74,7 @@ class Board:
                         if move_x != x or move_y != y:
                             board_copy = self.__copy__()
                             board_copy.move_piece(x, y, move_x, move_y)
-                            boards.append(board_copy)
-        return boards
+                            self.possible_moves[color].append(board_copy)
 
     def value(self):
         value = 0
@@ -73,41 +84,35 @@ class Board:
                 value += piece.value
         return value
 
-    def evaluate(self, depth, is_white_playing):
-        if depth == 0:
-            return self.value()
-        all_evaluations = [
-            board.evaluate(depth-1, not is_white_playing)
-            for board in self.possible_move(is_white_playing)
-        ]
-        if len(all_evaluations) == 0:
-            return self.value()
-        if is_white_playing:
-            return max(all_evaluations)
-        return min(all_evaluations)
+    def exercice(self):
+        for x in range(3):
+            self.add_piece(Pawn, WHITE, x, 4)
+            self.add_piece(Pawn, BLACK, x, 6)
 
+        # self.add_piece(King, WHITE, 7, 0)
+        self.add_piece(King, BLACK, 7, 0)
 
     def legal_init_board(self):
         for x in range(8):
-            self.add_piece(Pawn, True, x, 1)
-            self.add_piece(Pawn, False, x, 6)
+            self.add_piece(Pawn, WHITE, x, 1)
+            self.add_piece(Pawn, BLACK, x, 6)
 
-        self.add_piece(Rook, True, 0, 0)
-        self.add_piece(Rook, True, 7, 0)
-        self.add_piece(Rook, False, 0, 7)
-        self.add_piece(Rook, False, 7, 7)
+        self.add_piece(Rook, WHITE, 0, 0)
+        self.add_piece(Rook, WHITE, 7, 0)
+        self.add_piece(Rook, BLACK, 0, 7)
+        self.add_piece(Rook, BLACK, 7, 7)
 
-        self.add_piece(Knight, True, 1, 0)
-        self.add_piece(Knight, True, 6, 0)
-        self.add_piece(Knight, False, 1, 7)
-        self.add_piece(Knight, False, 6, 7)
+        self.add_piece(Knight, WHITE, 1, 0)
+        self.add_piece(Knight, WHITE, 6, 0)
+        self.add_piece(Knight, BLACK, 1, 7)
+        self.add_piece(Knight, BLACK, 6, 7)
 
-        self.add_piece(Bishop, True, 2, 0)
-        self.add_piece(Bishop, True, 5, 0)
-        self.add_piece(Bishop, False, 2, 7)
-        self.add_piece(Bishop, False, 5, 7)
+        self.add_piece(Bishop, WHITE, 2, 0)
+        self.add_piece(Bishop, WHITE, 5, 0)
+        self.add_piece(Bishop, BLACK, 2, 7)
+        self.add_piece(Bishop, BLACK, 5, 7)
 
-        self.add_piece(Queen, True, 3, 0)
-        self.add_piece(Queen, False, 3, 7)
-        self.add_piece(King, True, 4, 0)
-        self.add_piece(King, False, 4, 7)
+        self.add_piece(Queen, WHITE, 3, 0)
+        self.add_piece(Queen, BLACK, 3, 7)
+        self.add_piece(King, WHITE, 4, 0)
+        self.add_piece(King, BLACK, 4, 7)
