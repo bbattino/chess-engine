@@ -1,3 +1,4 @@
+from copy import deepcopy
 from pieces import Bishop, King, Knight, Pawn, Queen, Rook
 
 import numpy as np
@@ -7,13 +8,17 @@ BLACK = -1
 
 
 class Board:
-    def __init__(self, method='legal'):
-        self.board = [[None for _ in range(8)] for _ in range(8)]
+    def __init__(self, method='legal', board=None):
+        if board:
+            self.board = board
+        else:
+            self.board = [[None for _ in range(8)] for _ in range(8)]
+            if method == 'legal':
+                self.legal_init_board()
+            if method == 'exercice':
+                self.exercice()
         self.possible_moves = {}
-        if method == 'legal':
-            self.legal_init_board()
-        if method == 'exercice':
-            self.exercice()
+        self.last_move = None
 
     def __repr__(self):
         return '\n'.join(
@@ -32,16 +37,13 @@ class Board:
         return self.board[x]
 
     def __copy__(self):
-        copy = Board()
-        for x in range(8):
-            for y in range(8):
-                copy.board[x][y] = self.board[x][y].copy() if self.board[x][y] else None
-        return copy
+        return Board(board=deepcopy(self.board))
 
     def add_piece(self, piece_class, color, x, y):
         self.board[x][y] = piece_class(color, x, y)
 
     def move_piece(self, x1, y1, x2, y2):
+        self.last_move = x1, y1, x2, y2
         if self.is_promotion(x1, y1, x2, y2):
             return
         piece = self.board[x1][y1]
@@ -90,7 +92,7 @@ class Board:
             self.add_piece(Pawn, BLACK, x, 6)
 
         # self.add_piece(King, WHITE, 7, 0)
-        self.add_piece(King, BLACK, 7, 0)
+        # self.add_piece(King, BLACK, 7, 0)
 
     def legal_init_board(self):
         for x in range(8):
@@ -116,3 +118,4 @@ class Board:
         self.add_piece(Queen, BLACK, 3, 7)
         self.add_piece(King, WHITE, 4, 0)
         self.add_piece(King, BLACK, 4, 7)
+

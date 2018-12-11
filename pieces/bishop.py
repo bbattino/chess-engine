@@ -7,8 +7,11 @@ class Bishop(Piece):
         Piece.__init__(self, color, position_x, position_y)
 
     def __repr__(self):
-        # return '\u265d' if self.color else '\u2657'
+        return '\u265d' if self.color == 1 else '\u2657'
+
+    def to_html(self):
         return '&#9815;' if self.color == 1 else '&#9821;'
+
 
     @property
     def value(self):

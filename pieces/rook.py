@@ -7,8 +7,11 @@ class Rook(Piece):
         Piece.__init__(self, color, position_x, position_y)
 
     def __repr__(self):
-        return '&#9814;' if self.color else '&#9820;'
-        # return '\u265c' if self.color else '\u2656'
+        return '\u265c' if self.color == 1 else '\u2656'
+
+    def to_html(self):
+        return '&#9814;' if self.color == 1 else '&#9820;'
+
 
     @property
     def value(self):

@@ -7,7 +7,9 @@ class Knight(Piece):
         Piece.__init__(self, color, position_x, position_y)
 
     def __repr__(self):
-        # return '\u265e' if self.color else '\u2658'
+        return '\u265e' if self.color == 1 else '\u2658'
+
+    def to_html(self):
         return '&#9816;' if self.color == 1 else '&#9822;'
 
     @property

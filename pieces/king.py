@@ -7,8 +7,11 @@ class King(Piece):
         Piece.__init__(self, color, position_x, position_y)
 
     def __repr__(self):
+        return '\u265a' if self.color == 1 else '\u2654'
+
+    def to_html(self):
         return '&#9812;' if self.color == 1 else '&#9818;'
-        # return '\u265a' if self.color else '\u2654'
+
 
     @property
     def value(self):
