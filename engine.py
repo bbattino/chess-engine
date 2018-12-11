@@ -7,7 +7,7 @@ import time
 
 class Engine:
     def __init__(self):
-        self.board = Board()
+        self.board = Board(method='exercice')
         self.printer = Printer()
         self._color_to_play = 1
 
@@ -27,6 +27,11 @@ class Engine:
         all_moves = self.board.possible_move(self._color_to_play)
         if len(all_moves) == 0:
             return 'PAT'
+        if len(all_moves) == 1:
+            self.board = all_moves[0]
+            self._color_to_play *= -1
+            return
+
         for index, move in enumerate(all_moves):
             value = self.evaluate(move, depth, - self._color_to_play)
             if max_value is None or (self._color_to_play * value > self._color_to_play * max_value):
@@ -38,24 +43,26 @@ class Engine:
         self.board = random.choice(best_moves)
         self._color_to_play *= -1
 
-    def evaluate(self, board, depth, is_white_playing):
+    def evaluate(self, board, depth, color_to_play):
         if depth == 0:
             return board.value()
-        '''
-        all_evaluations = []
-        for b in board.possible_move(is_white_playing):
+        max_ = - 9999
+        min_ = 9999
+        pat = True
+        for b in board.possible_move(color_to_play):
+            pat = False
+            evaluation_b = self.evaluate(b, depth - 1, - color_to_play)
+            min_ = min(min_, evaluation_b)
+            max_ = max(max_, evaluation_b)
 
-            all_evaluations.append(self.evaluate(b, depth - 1, not is_white_playing))
-        '''
-        all_evaluations = [
-            self.evaluate(b, depth-1, not is_white_playing)
-            for b in board.possible_move(is_white_playing)
-        ]
-        if len(all_evaluations) == 0:
+        if pat:
             return 0
-        if is_white_playing:
-            return max(all_evaluations)
-        return min(all_evaluations)
+        if color_to_play == 1:
+            return max_
+        return min_
 
     def print_board(self):
         self.printer.print_html(self.board)
+
+    def print_history_board(self):
+        self.printer.print_html(self.board, 'template/history.html', 'a')

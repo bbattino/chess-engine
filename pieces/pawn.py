@@ -7,14 +7,16 @@ class Pawn(Piece):
         Piece.__init__(self, color, position_x, position_y)
 
     def __repr__(self):
-        # return '\u265f' if self.color else '\u2659'
+        return '\u265f' if self.color == 1 else '\u2659'
+
+    def to_html(self):
         return '&#9817;' if self.color == 1 else '&#9823;'
 
     @property
     def value(self):
         if self.color == 1:
             return 1 + (self.position_y - 1) / 14
-        return 1 + (6 - self.position_y) / 14
+        return - 1 - (6 - self.position_y) / 14
 
     def possible_moves(self, board):
         # TODO add en passant capture

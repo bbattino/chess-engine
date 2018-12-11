@@ -8,8 +8,11 @@ class Queen(Piece):
         Piece.__init__(self, color, position_x, position_y)
 
     def __repr__(self):
-        # return '\u265b' if self.color else '\u2655'
-        return '&#9813;' if self.color else '&#9819;'
+        return '\u265b' if self.color == 1 else '\u2655'
+
+    def to_html(self):
+        return '&#9813;' if self.color == 1 else '&#9819;'
+
 
     @property
     def value(self):
