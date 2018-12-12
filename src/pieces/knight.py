@@ -14,12 +14,15 @@ class Knight(Piece):
 
     @property
     def value(self):
-        return 3 * self.color
+        if self._value:
+            return self._value
+        self._value = 3 * self.color
+        return self._value
 
     def possible_moves(self, board):
         # TODO : To optimise by looping on delta_position
         moves = [
-            (self.position_x + sign_x * delta_x, self.position_y + sign_y * delta_y)
+            (self._position_x + sign_x * delta_x, self._position_y + sign_y * delta_y)
             for sign_x in [-1, 1]
             for sign_y in [-1, 1]
             for delta_x, delta_y in [(2, 1), (1, 2)]
@@ -31,4 +34,4 @@ class Knight(Piece):
         ]
 
     def copy(self):
-        return Knight(self.color, self.position_x, self.position_y)
+        return Knight(self.color, self._position_x, self._position_y)

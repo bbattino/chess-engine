@@ -2,19 +2,21 @@ class Piece:
 
     def __init__(self, color, position_x, position_y):
         self.color = color
-        self.position_x = position_x
-        self.position_y = position_y
+        self._position_x = position_x
+        self._position_y = position_y
+        self._value = None
 
     def __repr__(self):
-        return '{}?{}{}'.format(self.color, self.position_x, self.position_y)
+        return '?'
 
     def set_position(self, x, y):
-        self.position_x = x
-        self.position_y = y
+        self._position_x = x
+        self._position_y = y
+        self._value = None
 
     @property
     def value(self):
-        return self.value
+        return self._value
 
     def possible_moves(self, board):
         return []
@@ -32,4 +34,4 @@ class Piece:
         return 0 <= x < 8 and 0 <= y <8
 
     def copy(self):
-        return Piece(self.color, self.position_x, self.position_y)
+        return Piece(self.color, self._position_x, self._position_y)

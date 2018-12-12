@@ -15,7 +15,10 @@ class King(Piece):
 
     @property
     def value(self):
-        return 1000 * self.color
+        if self._value:
+            return self._value
+        self._value = 1000 * self.color
+        return self._value
 
     def possible_moves(self, board):
         deltas = list(set([
@@ -26,13 +29,13 @@ class King(Piece):
             for bool_y in [1, 0]
         ]))
         return [
-            (self.position_x + delta_x, self.position_y + delta_y)
+            (self._position_x + delta_x, self._position_y + delta_y)
             for delta_x, delta_y in deltas
-            if self._is_valid_move(self.position_x + delta_x, self.position_y + delta_y, board)
+            if self._is_valid_move(self._position_x + delta_x, self._position_y + delta_y, board)
         ]
 
     def copy(self):
-        return King(self.color, self.position_x, self.position_y)
+        return King(self.color, self._position_x, self._position_y)
 
     def _is_valid_move(self, x, y, board):
         return self.is_legal_move(x, y) and not self.is_partner(x, y, board)

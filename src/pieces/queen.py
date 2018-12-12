@@ -1,5 +1,4 @@
-from pieces.piece import Piece
-from pieces import Rook, Bishop
+from pieces import Rook, Bishop, Piece
 
 
 class Queen(Piece):
@@ -16,14 +15,17 @@ class Queen(Piece):
 
     @property
     def value(self):
-        return 8 * self.color
+        if self._value:
+            return self._value
+        self._value = 8 * self.color
+        return self._value
 
     def possible_moves(self, board):
         return list(set(Rook(
-            self.color, self.position_x, self.position_y
+            self.color, self._position_x, self._position_y
         ).possible_moves(board) + Bishop(
-            self.color, self.position_x, self.position_y
+            self.color, self._position_x, self._position_y
         ).possible_moves(board)))
 
     def copy(self):
-        return Queen(self.color, self.position_x, self.position_y)
+        return Queen(self.color, self._position_x, self._position_y)

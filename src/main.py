@@ -1,7 +1,9 @@
-from engine import Engine
 import time
+
+from engine import Engine
+
 '''
-from board import Board
+from _board import Board
 from tools.printer import Printer
 b = Board()
 index = 0
@@ -21,10 +23,10 @@ engine = Engine()
 engine.print_board()
 
 for i in range(300):
-    time.sleep(2)
+    # time.sleep(2)
     d = max(3, 9-i)
     t = time.time()
-    engine.play(deapth=d)
+    engine.play(deapth=0)
     print(time.time() - t, flush=True)
     engine.print_board()
 

@@ -1,21 +1,20 @@
+import random
+
 from board import Board
 from tools.printer import Printer
-
-import random
-import time
 
 
 class Engine:
     def __init__(self):
-        self.board = Board(method='exercice')
+        self.board = Board()
         self.printer = Printer()
         self._color_to_play = 1
 
-    def play(self, method='value', deapth=3):
+    def play(self, method='value', depth=3):
         if method == 'random':
             self.random_play()
         elif method == 'value':
-            self.play_value(deapth)
+            self.play_value(depth)
 
     def random_play(self):
         self.board = random.choice(self.board.possible_move(self._color_to_play))
@@ -39,8 +38,8 @@ class Engine:
                 best_moves = [move]
             elif value == max_value:
                 best_moves.append(move)
-        print('board value '+str(max_value))
         self.board = random.choice(best_moves)
+        print('move: {}\nvalue: {} '.format(self.board.pgn, max_value))
         self._color_to_play *= -1
 
     def evaluate(self, board, depth, color_to_play):
@@ -54,7 +53,6 @@ class Engine:
             evaluation_b = self.evaluate(b, depth - 1, - color_to_play)
             min_ = min(min_, evaluation_b)
             max_ = max(max_, evaluation_b)
-
         if pat:
             return 0
         if color_to_play == 1:

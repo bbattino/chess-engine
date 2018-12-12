@@ -1,6 +1,7 @@
+import numpy as np
+
 from template.constant import HTML, HTML_CASE, BLANK_LINE, REPLACE_LINE
 
-import numpy as np
 
 class Printer:
 

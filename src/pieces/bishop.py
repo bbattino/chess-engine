@@ -12,25 +12,26 @@ class Bishop(Piece):
     def to_html(self):
         return '&#9815;' if self.color == 1 else '&#9821;'
 
-
     @property
     def value(self):
-        return 3 * self.color
+        if self._value:
+            return self._value
+        self._value = 3 * self.color
+        return self._value
 
     def possible_moves(self, board):
         deltas = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
         possible_moves = []
         for delta_x, delta_y in deltas:
             for length in range(1, 8):
-                x = self.position_x + length * delta_x
-                y = self.position_y + length * delta_y
+                x = self._position_x + length * delta_x
+                y = self._position_y + length * delta_y
                 if not self._is_valid_move(x, y, board):
                     break
                 possible_moves.append((x, y))
                 if self._is_capture(x, y, board):
                     break
         return possible_moves
-
 
     def copy(self):
         return Bishop(self.color, self.position_x, self.position_y)
