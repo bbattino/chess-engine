@@ -39,7 +39,7 @@ class Board:
         return self._board[x]
 
     def __copy__(self):
-        return Board(board=deepcopy(self.board), pgn=self.pgn)
+        return Board(board=deepcopy(self._board), pgn=self.pgn)
 
     def add_piece(self, piece_class, color, x, y):
         self._board[x][y] = piece_class(color, x, y)

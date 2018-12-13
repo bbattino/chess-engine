@@ -26,7 +26,7 @@ for i in range(300):
     # time.sleep(2)
     d = max(3, 9-i)
     t = time.time()
-    engine.play(deapth=0)
+    engine.play(depth=0)
     print(time.time() - t, flush=True)
     engine.print_board()
 
