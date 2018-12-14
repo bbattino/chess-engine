@@ -1,14 +1,17 @@
 import random
 
 from board import Board
+from config import WHITE
 from tools.printer import Printer
+from tools.board_filler import BoardFiller
 
 
 class Engine:
     def __init__(self):
-        self.board = Board()
+        self._board = Board()
+        self._standard_match_init_board()
         self.printer = Printer()
-        self._color_to_play = 1
+        self._color_to_play = WHITE
 
     def play(self, method='value', depth=3):
         if method == 'random':
@@ -17,17 +20,17 @@ class Engine:
             self.play_value(depth)
 
     def random_play(self):
-        self.board = random.choice(self.board.possible_move(self._color_to_play))
+        self._board = random.choice(self._board.possible_move(self._color_to_play))
         self._color_to_play *= -1
 
     def play_value(self, depth):
         max_value = None
         best_moves = []
-        all_moves = self.board.possible_move(self._color_to_play)
+        all_moves = self._board.possible_move(self._color_to_play)
         if len(all_moves) == 0:
             return 'PAT'
         if len(all_moves) == 1:
-            self.board = all_moves[0]
+            self._board = all_moves[0]
             self._color_to_play *= -1
             return
 
@@ -38,8 +41,8 @@ class Engine:
                 best_moves = [move]
             elif value == max_value:
                 best_moves.append(move)
-        self.board = random.choice(best_moves)
-        print('move: {}\nvalue: {} '.format(self.board.pgn, max_value))
+        self._board = random.choice(best_moves)
+        print('move: {}\nvalue: {} '.format(self._board.pgn, max_value))
         self._color_to_play *= -1
 
     def evaluate(self, board, depth, color_to_play):
@@ -60,7 +63,14 @@ class Engine:
         return min_
 
     def print_board(self):
-        self.printer.print_html(self.board)
+        self.printer.print_html(self._board)
 
     def print_history_board(self):
-        self.printer.print_html(self.board, 'template/history.html', 'a')
+        self.printer.print_html(self._board, 'template/history.html', 'a')
+
+    def _standard_match_init_board(self):
+        self._board.set_board(
+            BoardFiller().fill(text='rnbqkbnr/pppppppp/......../......../......../......../PPPPPPPP/RNBQKBNR')
+        )
+
+

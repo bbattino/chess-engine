@@ -3,9 +3,6 @@ from pieces.piece import Piece
 
 class Bishop(Piece):
 
-    def __init__(self, color, position_x, position_y):
-        Piece.__init__(self, color, position_x, position_y)
-
     def __repr__(self):
         return '\u265d' if self.color == 1 else '\u2657'
 
@@ -32,9 +29,6 @@ class Bishop(Piece):
                 if self._is_capture(x, y, board):
                     break
         return possible_moves
-
-    def copy(self):
-        return Bishop(self.color, self.position_x, self.position_y)
 
     def _is_valid_move(self, x, y, board):
         return self.is_legal_move(x, y) and not self.is_piece(x, y, board)

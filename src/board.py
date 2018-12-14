@@ -2,22 +2,12 @@ from copy import deepcopy
 
 import numpy as np
 
-from pieces import Bishop, King, Knight, Pawn, Queen, Rook
-
-WHITE = 1
-BLACK = -1
+from pieces import Pawn, Queen
 
 
 class Board:
-    def __init__(self, method='legal', board=None, pgn=None):
-        if board:
-            self._board = board
-        else:
-            self._board = [[None for _ in range(8)] for _ in range(8)]
-            if method == 'legal':
-                self.legal_init_board()
-            if method == 'exercice':
-                self.exercice()
+    def __init__(self, board=None, pgn=None):
+        self._board = board or np.full((8, 8), False, dtype=object)
         self.possible_moves = {}
         self.last_move = None
         self.pgn = pgn or ''
@@ -44,6 +34,9 @@ class Board:
     def add_piece(self, piece_class, color, x, y):
         self._board[x][y] = piece_class(color, x, y)
 
+    def set_board(self, board):
+        self._board = board
+
     def move_piece(self, x1, y1, x2, y2):
         self.last_move = x1, y1, x2, y2
         if self.is_promotion(x1, y1, x2, y2):
@@ -63,7 +56,7 @@ class Board:
         piece = self._board[x1][y1]
         if isinstance(piece, Pawn) and y2 in [0, 7]:
             self._board[x2][y2] = Queen(piece.color, x2, y2)
-            self._board[x1][y1] = None
+            self._board[x1][y1] = False
             return True
         return False
 
@@ -93,37 +86,3 @@ class Board:
             if piece:
                 value += piece.value
         return value
-
-    def exercice(self):
-        for x in range(3):
-            self.add_piece(Pawn, WHITE, x, 4)
-            self.add_piece(Pawn, BLACK, x, 6)
-
-        # self.add_piece(King, WHITE, 7, 0)
-        # self.add_piece(King, BLACK, 7, 0)
-
-    def legal_init_board(self):
-        for x in range(8):
-            self.add_piece(Pawn, WHITE, x, 1)
-            self.add_piece(Pawn, BLACK, x, 6)
-
-        self.add_piece(Rook, WHITE, 0, 0)
-        self.add_piece(Rook, WHITE, 7, 0)
-        self.add_piece(Rook, BLACK, 0, 7)
-        self.add_piece(Rook, BLACK, 7, 7)
-
-        self.add_piece(Knight, WHITE, 1, 0)
-        self.add_piece(Knight, WHITE, 6, 0)
-        self.add_piece(Knight, BLACK, 1, 7)
-        self.add_piece(Knight, BLACK, 6, 7)
-
-        self.add_piece(Bishop, WHITE, 2, 0)
-        self.add_piece(Bishop, WHITE, 5, 0)
-        self.add_piece(Bishop, BLACK, 2, 7)
-        self.add_piece(Bishop, BLACK, 5, 7)
-
-        self.add_piece(Queen, WHITE, 3, 0)
-        self.add_piece(Queen, BLACK, 3, 7)
-        self.add_piece(King, WHITE, 4, 0)
-        self.add_piece(King, BLACK, 4, 7)
-

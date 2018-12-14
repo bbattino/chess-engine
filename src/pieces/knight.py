@@ -3,9 +3,6 @@ from pieces.piece import Piece
 
 class Knight(Piece):
 
-    def __init__(self, color, position_x, position_y):
-        Piece.__init__(self, color, position_x, position_y)
-
     def __repr__(self):
         return '\u265e' if self.color == 1 else '\u2658'
 
@@ -33,5 +30,3 @@ class Knight(Piece):
             if self.is_legal_move(move_x, move_y) and not self.is_partner(move_x, move_y, board)
         ]
 
-    def copy(self):
-        return Knight(self.color, self._position_x, self._position_y)

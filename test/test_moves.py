@@ -4,7 +4,6 @@ from pieces import Bishop, King, Knight, Pawn, Queen, Rook
 
 
 class TestMoves(TestCase):
-
     def test_bishop(self):
         board = Board(method='empty')
         board.add_piece(Bishop, 1, 3, 3)
@@ -13,16 +12,15 @@ class TestMoves(TestCase):
         all_moves_computed = [
             move.pgn
             for move in board.possible_move(1)
-        ]
+            ]
         all_true_moves = [
             ' d4 {};'.format(position)
             for position in ['e3', 'f2', 'g1', 'c5', 'b6', 'a7', 'c3', 'b2', 'a1']
-        ]
+            ]
 
         self.assertListEqual(all_moves_computed, all_true_moves)
 
     def test_king(self):
-
         board = Board(method='empty')
         board.add_piece(King, 1, 3, 3)
 
@@ -38,7 +36,6 @@ class TestMoves(TestCase):
         self.assertListEqual(all_moves_computed, all_true_moves)
 
     def test_knight(self):
-
         board = Board(method='empty')
         board.add_piece(Knight, 1, 3, 3)
 
